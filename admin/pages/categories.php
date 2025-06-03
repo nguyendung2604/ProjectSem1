@@ -42,6 +42,11 @@
                                 onclick="return confirm('Bạn có chắc muốn xóa danh mục này?')">
                                 <i class="fas fa-trash me-1"></i>Xóa
                             </button>
+
+                             <button type="submit" name="edit_brand" class="btn btn-danger-custom btn-sm btn-custom" 
+                                onclick="return confirm('Bạn có chắc muốn sửa thương hiệu này?')">
+                           <i class="bi bi-pencil-fill"></i>Sửa
+                        </button>
                         </form>
                     </td>
                 </tr>

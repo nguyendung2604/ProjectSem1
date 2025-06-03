@@ -41,8 +41,15 @@
                         <input type="hidden" name="brand_id" value="<?php echo $row['brand_id']; ?>">
                         <button type="submit" name="delete_brand" class="btn btn-danger-custom btn-sm btn-custom" 
                                 onclick="return confirm('Bạn có chắc muốn xóa thương hiệu này?')">
-                            <i class="fas fa-trash me-1"></i>Xóa
+                           <i class="bi bi-trash3-fill"></i>Xóa
                         </button>
+
+                        <button type="submit" name="edit_brand" class="btn btn-danger-custom btn-sm btn-custom" 
+                                onclick="return confirm('Bạn có chắc muốn sửa thương hiệu này?')">
+                           <i class="bi bi-pencil-fill"></i>Sửa
+                        </button>
+
+                        
                     </form>
                 </td>
             </tr>

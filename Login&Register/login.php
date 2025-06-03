@@ -98,7 +98,7 @@ $user = $person1->check();
                        
                         <button class="btn btn-primary w-100 py-2 mb-3" type="submit">SIGN IN</button>
                         <div class="text-center">
-                             <a href="../register/RegisterForm.php" class="text-decoration-none">Register</a> 
+                             <a href="register.php" class="text-decoration-none">Register</a> 
                             </div>
                                
                     </form>

@@ -1,10 +1,13 @@
 <?php
+// kết nối csdl
 require_once 'includes/db_connect.php';
 
+//biến để thông bào
 $message = "";
 $message_type = "";
 
-// Xử lý các hành động (thêm, chỉnh sửa, xóa)
+
+// các hành động
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Thêm danh mục
@@ -24,6 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = null; // Đóng statement
             }
         }
+
+
+
+
         
         // Thêm thương hiệu
         if (isset($_POST['add_brand'])) {

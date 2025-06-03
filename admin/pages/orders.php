@@ -51,7 +51,7 @@
                                 <option value="delivered" <?php echo $row['status'] === 'delivered' ? 'selected' : ''; ?>>Đã giao</option>
                             </select>
                             <button type="submit" name="update_order_status" class="btn btn-primary-custom btn-sm">
-                                <i class="fas fa-save"></i>
+                              <i class="bi bi-floppy-fill"></i>
                             </button>
                         </div>
                     </form>
