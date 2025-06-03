@@ -1,104 +1,166 @@
 
-        :where([class^="ri-"])::before { content: "\f3c2"; }
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #f59e0b;
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
         }
+        
+        .brand-font {
+            font-family: 'Pacifico', cursive;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 8px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2563eb;
+            border-color: #2563eb;
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+        
         .hero-section {
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.5) 70%, rgba(255, 255, 255, 0) 100%);
+            background-image:url(HeroSection.jpg) ;
             background-size: cover;
             background-position: center;
-        }
-        .brand-bg {
-            background-size: 30%;
             background-repeat: no-repeat;
-            background-position: 95% center;
-            background-blend-mode: soft-light;
+            margin-top: 76px; 
         }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
+        
+        .brand-tab {
+            transition: all 0.3s ease;
+            min-width: 80px; 
+        }
+        
+        .brand-tab.active .brand-icon {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+        
+        .brand-tab:hover .brand-icon {
+            background-color: #e9ecef;
+        }
+        
+        .brand-icon {
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
             border-radius: 50%;
-            background: #3b82f6;
-            cursor: pointer;
+            transition: all 0.3s ease;
         }
-        input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #3b82f6;
-            cursor: pointer;
-            border: none;
+        
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        .custom-checkbox {
-            position: relative;
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            border: 2px solid #d1d5db;
-            background-color: white;
-            transition: all 0.2s ease;
-        }
-        .custom-checkbox.checked {
-            background-color: #3b82f6;
-            border-color: #3b82f6;
-        }
-        .custom-checkbox.checked::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 6px;
-            width: 5px;
-            height: 10px;
-            border: solid white;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-        }
-        .custom-switch {
-            position: relative;
-            width: 44px;
-            height: 24px;
-            background-color: #e5e7eb;
-            border-radius: 12px;
-            transition: all 0.3s;
-        }
-        .custom-switch.active {
-            background-color: #3b82f6;
-        }
-        .custom-switch::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-        .custom-switch.active::after {
-            left: 22px;
-        }
-        .compare-bar {
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        .compare-bar.show {
-            transform: translateY(0);
-        }
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        .brand-tab.active {
-            color: #3b82f6;
-            border-bottom: 2px solid #3b82f6;
-        }
-        .tab-content {
+        
+        .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
-        .tab-content.active {
-            display: block;
+        
+        .fixed-top {
+            backdrop-filter: blur(10px);
         }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+        
+      
+        .search-input {
+            width: 16rem;
+            border-radius: 25px;
+        }
+        
+     
+        .newsletter-section {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .newsletter-input {
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .newsletter-button {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        footer {
+            background-color: #212529 !important;
+        }
+        
+        footer .text-muted {
+            color: #ffffff !important; /* Màu trắng */
+        }
+        
+        footer a.text-muted:hover {
+            color: #d1d5db !important; /* Màu xám sáng khi hover */
+        }
+
+        .social-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: #495057;
+            color: white;
+        }
+        
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .contact-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--primary-color);
+        }
+
+        /* Điều chỉnh kích thước và kiểu dáng cho Bootstrap Icons */
+        .nav-icon {
+            font-size: 1.5rem;
+            vertical-align: middle;
+        }
+
+        .brand-icon i {
+            font-size: 1.75rem;
+        }
+
+        .contact-icon i {
+            font-size: 1.2rem;
+        }
+
+  
