@@ -15,7 +15,7 @@
             // Truy vấn lấy danh sách đơn hàng kèm theo username từ bảng users
             $sql = "SELECT o.*, u.username as user_name 
                     FROM orders o 
-                    LEFT JOIN users u ON o.user_id = u.id 
+                    LEFT JOIN users u ON o.user_id = u.user_id 
                     ORDER BY o.order_id ASC";
             $stmt = $conn->prepare($sql);
             $stmt->execute();

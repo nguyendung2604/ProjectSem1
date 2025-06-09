@@ -1,5 +1,3 @@
-
-
 <?php
 require_once("Connect.php");
 ?>
@@ -43,10 +41,10 @@ $user = $person1->check();
 
         // Kiểm tra quyền
         if ($user['role'] === 'admin') {
-            header("Location: admin.php"); // Trang dành cho admin
+            header("Location: ../admin/index.php"); // Trang dành cho admin
             exit;
         } else {
-            header("Location: user_home.php"); // Trang dành cho người dùng bình thường
+            header("Location: ../Home/index.php"); // Trang dành cho người dùng bình thường
             exit;
         }
     } else {

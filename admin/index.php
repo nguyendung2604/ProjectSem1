@@ -117,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Xóa người dùng
         if (isset($_POST['delete_user'])) {
             $user_id = $_POST['user_id'];
-            $sql = "DELETE FROM users WHERE id = :user_id";
+            $sql = "DELETE FROM users WHERE user_id = :user_id";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             if ($stmt->execute()) {
@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($role !== null) {
                     $sql .= ", role = :role";
                 }
-                $sql .= " WHERE id = :user_id";
+                $sql .= " WHERE user_id = :user_id";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':username', $username, PDO::PARAM_STR);
                 $stmt->bindParam(':email', $email, PDO::PARAM_STR);

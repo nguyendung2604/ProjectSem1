@@ -33,29 +33,41 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
    
 </head>
 <body>
-    <!-- Header -->
+ <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand brand-font text-primary me-4" href="#">Wireless World</a>
             
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
             <div class="d-flex align-items-center order-lg-last">
-           
+                <!-- Search Bar -->
                 <div class="position-relative me-3">
                     <input type="text" class="form-control pe-5 search-input" placeholder="Search phones...">
                     <div class="position-absolute top-50 end-0 translate-middle-y me-3">
-                        <i class="bi-search text-muted"></i>
+                        <i class="bi bi-search text-muted"></i>
                     </div>
                 </div>
 
                 <!-- Icons -->
                 <button class="btn btn-link text-dark p-2 me-2 nav-icon" aria-label="Shopping Cart">
-                  <i class="bi bi-bag"></i>
+                    <i class="bi bi-bag"></i>
                 </button>
                 
-                <button class="btn btn-link text-dark p-2 me-2 nav-icon" aria-label="User Profile">
-                   <i class="bi bi-person-circle"></i>
-                </button>
-                
+                <!-- User Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-link text-dark p-2 me-2 nav-icon" type="button" id="userDropdown" 
+                            data-bs-toggle="dropdown" aria-expanded="false" aria-label="User Profile">
+                        <i class="bi bi-person-circle"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/Login&Register/login.php">Login</a></li>
+                        <li><a class="dropdown-item" href="/Login&Register/register.php">Register</a></li>
+                    </ul>
+                </div>
             </div>
             
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -465,3 +477,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 </html>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
