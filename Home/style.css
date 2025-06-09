@@ -149,7 +149,6 @@
             color: var(--primary-color);
         }
 
-        /* Điều chỉnh kích thước và kiểu dáng cho Bootstrap Icons */
         .nav-icon {
             font-size: 1.5rem;
             vertical-align: middle;

@@ -27,19 +27,21 @@ class Person {
 
 // Lấy dữ liệu từ form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-$username = $_POST['username'];
-$password = $_POST['password'];
-$email = $_POST['email'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $email = $_POST['email'];
 
-
-
-$person = new Person($username, $password, $email);
-
-if ($person->save()) {
-    echo "Registration successful";
-} else {
-    echo "Registration failed";
-}
+    if ($password !== $confirm_password) {
+        echo "<div class='alert alert-danger text-center'>Passwords do not match!</div>";
+    } else {
+        $person = new Person($username, $password, $email);
+        if ($person->save()) {
+            echo "<div class='alert alert-success text-center'>Registration successful</div>";
+        } else {
+            echo "<div class='alert alert-danger text-center'>Registration failed</div>";
+        }
+    }
 }
 ?>
 
@@ -74,6 +76,11 @@ if ($person->save()) {
                         <div class="form-floating mb-3 position-relative">
                             <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                             <label for="password">Password</label>
+                        </div>
+
+                        <div class="form-floating mb-3 position-relative">
+                            <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" name="confirm_password">
+                            <label for="confirm_password">Confirm Password</label>
                         </div>
 
                            <div class="form-floating mb-3 position-relative">

@@ -1,3 +1,14 @@
+<?php
+require_once 'db_connect.php';
+// Lấy 8 sản phẩm mới nhất cùng ảnh đại diện
+$sql = "SELECT p.product_id, p.name, p.price, pi.image_url FROM products p
+        LEFT JOIN product_images pi ON p.product_id = pi.product_id
+        GROUP BY p.product_id
+        ORDER BY p.created_at DESC LIMIT 8";
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,6 +164,37 @@
         </div>
     </section>
 
+    <!-- Featured Products Section -->
+    <section id="featured-products" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="h2 fw-bold text-center mb-5">Featured Products</h2>
+            <div class="row g-4">
+                <?php foreach ($products as $product): ?>
+                <div class="col-md-3">
+                    <div class="card h-100 shadow-sm">
+                        <img src="<?= htmlspecialchars($product['image_url'] ?? 'HeroSection.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
+                            <p class="card-text text-primary fw-bold mb-2">$<?= number_format($product['price']) ?></p>
+                            <a href="product_details.php?id=<?= $product['product_id'] ?>" class="btn btn-outline-primary btn-sm mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+<!-- Deals Section -->
+<section id="deals" class="py-5 bg-light">
+    <div class="container px-4">
+         <h2 class="h2 fw-bold text-center mb-4">Hot Deals & Promotions</h2>
+        
+        
+        
+    </div>
+</section>
+
     <!-- Newsletter Section -->
     <section class="py-5 newsletter-section">
         <div class="container">
@@ -181,7 +223,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <h2 class="h2 fw-bold text-center mb-5">About Wireless World</h2>
+                    <h2 class="h2 fw-bold text-center mb-5">About Us</h2>
                     
                     <div class="row align-items-center g-5">
                         <div class="col-lg-6">
@@ -229,7 +271,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+     <!-- Contact Section -->
     <section id="contact" class="py-5 bg-light">
         <div class="container">
             <h2 class="h2 fw-bold text-center mb-5">Contact Us</h2>
@@ -327,6 +369,10 @@
                                         </a>
                                     </div>
                                 </div>
+                                <!-- Google Map -->
+                                <div class="map-container mt-4">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.92312398634!2d105.81641017471458!3d21.035761787539037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab0d127a01e7%3A0xab069cd4eaa76ff2!2zMjg1IFAuIMSQ4buZaSBD4bqlbiwgTGnhu4V1IEdpYWksIEJhIMSQw6xuaCwgSMOgIE7hu5lpIDEwMDAwMCwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1747289103783!5m2!1sen!2s" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bản đồ vị trí công ty" width="100%" height="300" style="border:0;"></iframe>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -334,6 +380,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3">
@@ -377,7 +424,7 @@
                         <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Apple</a></li>
                         <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Google</a></li>
                         <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Xiaomi</a></li>
-                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">OnePlus</a></li>
+                        <li class="mb-2"><a href="#" class="text-muted text-decoration-none">Sony</a></li>
                         <li class="mb-2"><a href="#" class="text-muted text-decoration-none">View All Brands</a></li>
                     </ul>
                 </div>

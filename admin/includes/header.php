@@ -16,7 +16,7 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'dashboard';
         <div class="container-fluid">
             <h1>Admin Page</h1>
             <div class="breadcrumb-nav">
-               <i class="bi bi-house-fill"></i> <a href="/./Home/index.html">Home</a> / <span class="current">Admin</span>
+               <i class="bi bi-house-fill"></i> <a href="/./Home/index.php">Home</a> / <span class="current">Admin</span>
             </div>
         </div>
     </div>

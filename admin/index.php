@@ -185,6 +185,115 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $stmt = null; // Đóng statement
         }
+        
+        // Cập nhật danh mục
+        if (isset($_POST['edit_category'])) {
+            $category_id = $_POST['category_id'];
+            $category_name = trim($_POST['category_name']);
+            if (!empty($category_id) && !empty($category_name)) {
+                $sql = "UPDATE categories SET name = :name WHERE category_id = :category_id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':name', $category_name, PDO::PARAM_STR);
+                $stmt->bindParam(':category_id', $category_id, PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    $message = "Cập nhật danh mục thành công!";
+                    $message_type = "success";
+                } else {
+                    $message = "Lỗi khi cập nhật danh mục!";
+                    $message_type = "danger";
+                }
+                $stmt = null;
+            } else {
+                $message = "Vui lòng nhập tên danh mục hợp lệ!";
+                $message_type = "warning";
+            }
+        }
+
+        // Cập nhật thương hiệu
+        if (isset($_POST['edit_brand'])) {
+            $brand_id = $_POST['brand_id'];
+            $brand_name = trim($_POST['brand_name']);
+            if (!empty($brand_id) && !empty($brand_name)) {
+                $sql = "UPDATE brands SET name = :name WHERE brand_id = :brand_id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':name', $brand_name, PDO::PARAM_STR);
+                $stmt->bindParam(':brand_id', $brand_id, PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    $message = "Cập nhật thương hiệu thành công!";
+                    $message_type = "success";
+                } else {
+                    $message = "Lỗi khi cập nhật thương hiệu!";
+                    $message_type = "danger";
+                }
+                $stmt = null;
+            } else {
+                $message = "Vui lòng nhập tên thương hiệu hợp lệ!";
+                $message_type = "warning";
+            }
+        }
+
+        // Cập nhật người dùng
+        if (isset($_POST['edit_user'])) {
+            $user_id = $_POST['user_id'];
+            $username = trim($_POST['username']);
+            $email = trim($_POST['email']);
+            $role = isset($_POST['role']) ? trim($_POST['role']) : null;
+            if (!empty($user_id) && !empty($username) && !empty($email)) {
+                $sql = "UPDATE users SET username = :username, email = :email";
+                if ($role !== null) {
+                    $sql .= ", role = :role";
+                }
+                $sql .= " WHERE id = :user_id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+                $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+                if ($role !== null) {
+                    $stmt->bindParam(':role', $role, PDO::PARAM_STR);
+                }
+                $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    $message = "Cập nhật người dùng thành công!";
+                    $message_type = "success";
+                } else {
+                    $message = "Lỗi khi cập nhật người dùng!";
+                    $message_type = "danger";
+                }
+                $stmt = null;
+            } else {
+                $message = "Vui lòng nhập đầy đủ thông tin hợp lệ!";
+                $message_type = "warning";
+            }
+        }
+
+        // Cập nhật sản phẩm
+        if (isset($_POST['edit_product'])) {
+            $product_id = $_POST['product_id'];
+            $name = trim($_POST['product_name']);
+            $description = trim($_POST['description']);
+            $price = $_POST['price'];
+            $quantity = $_POST['quantity'];
+            // Có thể bổ sung cập nhật category_id, brand_id, image_url nếu cần
+            if (!empty($product_id) && !empty($name) && $price > 0 && $quantity >= 0) {
+                $sql = "UPDATE products SET name = :name, description = :description, price = :price, quantity = :quantity WHERE product_id = :product_id";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+                $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+                $stmt->bindParam(':price', $price, PDO::PARAM_STR);
+                $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+                $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+                if ($stmt->execute()) {
+                    $message = "Cập nhật sản phẩm thành công!";
+                    $message_type = "success";
+                } else {
+                    $message = "Lỗi khi cập nhật sản phẩm!";
+                    $message_type = "danger";
+                }
+                $stmt = null;
+            } else {
+                $message = "Vui lòng nhập thông tin sản phẩm hợp lệ!";
+                $message_type = "warning";
+            }
+        }
     } catch (PDOException $e) {
         $message = "Lỗi cơ sở dữ liệu: " . $e->getMessage();
         $message_type = "danger";
@@ -206,7 +315,6 @@ require_once 'includes/header.php';
                 <?php if (!empty($message)): ?>
                     <div class="alert alert-<?php echo $message_type; ?> alert-dismissible fade show" role="alert">
                         <i class="fas fa-info-circle me-2"></i><?php echo $message; ?>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 <?php endif; ?>
                 
