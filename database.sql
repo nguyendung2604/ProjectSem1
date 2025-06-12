@@ -30,10 +30,11 @@ CREATE TABLE products (
     category_id INT,
     brand_id INT,
     quantity INT NOT NULL,
+    avatar_product VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories(category_id),
-    FOREIGN KEY (brand_id) REFERENCES brands(brand_id)
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE,
+    FOREIGN KEY (brand_id) REFERENCES brands(brand_id) ON DELETE CASCADE
 );
 
 CREATE TABLE product_images (
@@ -70,6 +71,7 @@ CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
     total_price INT NOT NULL,
+    shipping_address VARCHAR(255) NOT NULL,
     status ENUM('pending', 'delivered') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

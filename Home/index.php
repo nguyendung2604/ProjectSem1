@@ -64,8 +64,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <i class="bi bi-person-circle"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="/Login&Register/login.php">Login</a></li>
-                        <li><a class="dropdown-item" href="/Login&Register/register.php">Register</a></li>
+                        <li><a class="dropdown-item" href="login.php">Login</a></li>
+                        <li><a class="dropdown-item" href="register.php">Register</a></li>
                     </ul>
                 </div>
             </div>
@@ -77,6 +77,9 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-medium" href="#brands">Brands</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link fw-medium" href="#catrgory">Catrgory</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-medium" href="#deals">Deals</a>
@@ -197,15 +200,15 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-<!-- Deals Section -->
-<section id="deals" class="py-5 bg-light">
-    <div class="container px-4">
-         <h2 class="h2 fw-bold text-center mb-4">Hot Deals & Promotions</h2>
-        
-        
-        
-    </div>
-</section>
+    <!-- Deals Section -->
+    <section id="deals" class="py-5 bg-light">
+        <div class="container px-4">
+            <h2 class="h2 fw-bold text-center mb-4">Hot Deals & Promotions</h2>
+            
+            
+            
+        </div>
+    </section>
 
     <!-- Newsletter Section -->
     <section class="py-5 newsletter-section">
@@ -392,7 +395,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </section>
-
 
     <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3">
