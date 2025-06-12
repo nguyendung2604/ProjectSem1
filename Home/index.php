@@ -1,10 +1,7 @@
 <?php
 require_once 'db_connect.php';
 // Lấy 8 sản phẩm mới nhất cùng ảnh đại diện
-$sql = "SELECT p.product_id, p.name, p.price, pi.image_url FROM products p
-        LEFT JOIN product_images pi ON p.product_id = pi.product_id
-        GROUP BY p.product_id
-        ORDER BY p.created_at DESC LIMIT 8";
+$sql = "SELECT product_id, name, price, avatar_product FROM products ORDER BY created_at DESC  ";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -135,49 +132,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </section>
 
-    <!-- Brand Navigation -->
-    <section id="brands" class="py-5 bg-white">
-        <div class="container">
-            <h2 class="h2 fw-bold text-center mb-5">Browse by Brand</h2>
-            
-            <div class="d-flex overflow-auto hide-scrollbar pb-3 justify-content-center gap-4">
-                <div class="brand-tab active text-center">
-                    <div class="brand-icon mb-2"> 
-                        <i class="bi-phone fs-4"></i> 
-                    </div>
-                    <span class="small fw-medium">All Brands</span>
-                </div>
-                
-                <div class="brand-tab text-center">
-                    <div class="brand-icon mb-2">
-                         <i class="bi-phone fs-4"></i> 
-                    </div>
-                    <span class="small fw-medium">Samsung</span>
-                </div>
-                
-                <div class="brand-tab text-center">
-                    <div class="brand-icon mb-2">
-                       <i class="bi-phone fs-4"></i> 
-                    </div>
-                    <span class="small fw-medium">Apple</span>
-                </div>
-                
-                <div class="brand-tab text-center">
-                    <div class="brand-icon mb-2">
-                       <i class="bi-phone fs-4"></i> 
-                    </div>
-                    <span class="small fw-medium">Google</span>
-                </div>
-                
-                <div class="brand-tab text-center">
-                    <div class="brand-icon mb-2">
-                        <i class="bi-phone fs-4"></i> 
-                    </div>
-                    <span class="small fw-medium">Xiaomi</span>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!-- Featured Products Section -->
     <section id="featured-products" class="py-5 bg-light">
@@ -187,7 +142,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($products as $product): ?>
                 <div class="col-md-3">
                     <div class="card h-100 shadow-sm">
-                        <img src="<?= htmlspecialchars($product['image_url'] ?? 'HeroSection.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>">
+                        <img src="image/<?= htmlspecialchars($product['avatar_product'] ?? 'HeroSection.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
                             <p class="card-text text-primary fw-bold mb-2">$<?= number_format($product['price']) ?></p>

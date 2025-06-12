@@ -3,12 +3,13 @@
 require 'db_connect.php';
 
 try {
-    // Truy vấn lấy danh sách sản phẩm, kết hợp với brands và product_images
+    // Truy vấn lấy danh sách sản phẩm với chỉ 1 ảnh đầu tiên
     $stmt = $pdo->prepare("
-        SELECT p.product_id, p.name, p.description, p.price, p.quantity, b.name AS brand_name, pi.image_url
+        SELECT p.product_id, p.name, p.description, p.price, p.quantity, 
+               b.name AS brand_name, 
+               (SELECT image_url FROM product_images WHERE product_id = p.product_id LIMIT 1) AS image_url
         FROM products p
         LEFT JOIN brands b ON p.brand_id = b.brand_id
-        LEFT JOIN product_images pi ON p.product_id = pi.product_id
         ORDER BY p.created_at DESC
     ");
     $stmt->execute();
