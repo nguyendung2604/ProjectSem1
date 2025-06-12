@@ -148,7 +148,7 @@ try {
 
 
     <!-- Featured Products Section -->
-    < <section>
+     <section>
         <h2>Browse Products</h2>
         <div class="product-container">
             <?php if (empty($products)): ?>
@@ -174,15 +174,7 @@ try {
         </div>
     </section>
 
-    <!-- Deals Section -->
-    <section id="deals" class="py-5 bg-light">
-        <div class="container px-4">
-            <h2 class="h2 fw-bold text-center mb-4">Hot Deals & Promotions</h2>
-            
-            
-            
-        </div>
-    </section>
+  
 
     <!-- Newsletter Section -->
     <section class="py-5 newsletter-section">

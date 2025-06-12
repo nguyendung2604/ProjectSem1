@@ -33,7 +33,7 @@
         }
         
         .hero-section {
-            background-image:url(HeroSection.jpg) ;
+            background-image:url(/image/HeroSection.jpg) ;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
