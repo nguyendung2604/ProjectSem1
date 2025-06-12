@@ -1,10 +1,23 @@
 <?php
-require_once 'db_connect.php';
-// Lấy 8 sản phẩm mới nhất cùng ảnh đại diện
-$sql = "SELECT product_id, name, price, avatar_product FROM products ORDER BY created_at DESC  ";
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Kết nối database
+require 'db_connect.php';
+
+try {
+    // Truy vấn lấy danh sách sản phẩm với chỉ 1 ảnh đầu tiên
+    $stmt = $pdo->prepare("
+        SELECT p.product_id, p.name, p.description, p.price, p.quantity, 
+               b.name AS brand_name, 
+               (SELECT image_url FROM product_images WHERE product_id = p.product_id LIMIT 1) AS image_url
+        FROM products p
+        LEFT JOIN brands b ON p.brand_id = b.brand_id
+        ORDER BY p.created_at DESC
+    ");
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Lỗi truy vấn: " . $e->getMessage();
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,23 +148,29 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
     <!-- Featured Products Section -->
-    <section id="featured-products" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="h2 fw-bold text-center mb-5">Featured Products</h2>
-            <div class="row g-4">
+    < <section>
+        <h2>Browse Products</h2>
+        <div class="product-container">
+            <?php if (empty($products)): ?>
+                <p>No products available.</p>
+            <?php else: ?>
                 <?php foreach ($products as $product): ?>
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <img src="image/<?= htmlspecialchars($product['avatar_product'] ?? 'HeroSection.jpg') ?>" class="card-img-top" alt="<?= htmlspecialchars($product['name']) ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($product['name']) ?></h5>
-                            <p class="card-text text-primary fw-bold mb-2">$<?= number_format($product['price']) ?></p>
-                            <a href="product_details.php?id=<?= $product['product_id'] ?>" class="btn btn-outline-primary btn-sm mt-2">View Details</a>
-                        </div>
+                    <div class="product-card">
+                        <?php if ($product['image_url']): ?>
+                            <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                        <?php else: ?>
+                            <img src="default-image.jpg" alt="No image available">
+                        <?php endif; ?>
+                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                        <p><strong>Brand:</strong> <?php echo htmlspecialchars($product['brand_name']); ?></p>
+                        <p class="price">$<?php echo number_format($product['price']); ?></p>
+                        <p class="<?php echo $product['quantity'] > 0 ? 'stock' : 'out-of-stock'; ?>">
+                            <?php echo $product['quantity'] > 0 ? 'In Stock: ' . $product['quantity'] : 'Out of Stock'; ?>
+                        </p>
+                        <a href="product_details.php?id=<?php echo $product['product_id']; ?>">View Details</a>
                     </div>
-                </div>
                 <?php endforeach; ?>
-            </div>
+            <?php endif; ?>
         </div>
     </section>
 
