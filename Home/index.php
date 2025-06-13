@@ -176,21 +176,10 @@ try {
 
 
 
+    
 
-     <div class="bg-white rounded-lg p-4 border-2 border-primary">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="font-semibold">iPhone 15 Pro Max</h4>
-                            <button class="text-gray-400 hover:text-gray-600 remove-comparison"
-                                data-phone="iPhone 15 Pro Max">
-                                <i class="ri-close-line text-xl"></i>
-                            </button>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <img src="https://readdy.ai/api/search-image?query=iphone%2015%20pro%20max%20smartphone%20on%20clean%20white%20background%2C%20professional%20product%20photography%2C%20detailed%20view%20of%20premium%20device%2C%20high%20resolution%2C%20studio%20lighting%2C%20minimalist%20presentation&width=200&height=200&seq=24&orientation=squarish"
-                                alt="iPhone 15 Pro Max" class="w-32 h-32 object-contain mb-4">
-                            <span class="text-lg font-bold">$1,199</span>
-                        </div>
-                    </div>s
+
+
   
 
     <!-- Newsletter Section -->

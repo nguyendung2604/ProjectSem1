@@ -142,7 +142,7 @@ INSERT INTO brands (name) VALUES
 
 -- Samsung Products
 INSERT INTO products (name, description, price, category_id, brand_id, quantity, avatar_product, screen_size, ram, storage, camera, battery, os, cpu) VALUES
-('Samsung Galaxy S25 Ultra', 'Flagship smartphone with 200MP camera and integrated S Pen', 1199.99, 1, 1, 50, '/image/galaxy-s25-ultra-1.webp', '6.8 inch', '12GB', '256GB', '200MP + 12MP + 10MP + 10MP', '5000 mAh', 'Android 14', 'Snapdragon 8 Gen 3'),
+('Samsung Galaxy S25 Ultra', 'Flagship smartphone with 200MP camera and integrated S Pen', 1199.99, 1, 1, 50, '/image/galaxy-s25-1.png', '6.8 inch', '12GB', '256GB', '200MP + 12MP + 10MP + 10MP', '5000 mAh', 'Android 14', 'Snapdragon 8 Gen 3'),
 ('Samsung Galaxy S24', 'Compact flagship smartphone with powerful performance', 899.99, 1, 1, 40, '/image/galaxy-s24-1.png', '6.2 inch', '8GB', '256GB', '50MP + 12MP + 10MP', '4000 mAh', 'Android 14', 'Snapdragon 8 Gen 3'),
 ('Samsung Galaxy A56 5G', 'Mid-range smartphone with 50MP camera and long-lasting battery', 369.99, 6, 1, 100, '/image/galaxy-a56-1.avif', '6.4 inch', '8GB', '128GB', '50MP + 12MP + 5MP', '5000 mAh', 'Android 13', 'Exynos 1380'),
 ('Samsung Galaxy Z Fold6', 'Premium foldable phone with dual screen', 1799.99, 5, 1, 15, '/image/galaxy-z-fold6-1.png', '7.6 inch', '12GB', '256GB', '50MP + 12MP + 10MP', '4400 mAh', 'Android 13', 'Snapdragon 8 Gen 2');
@@ -165,10 +165,10 @@ INSERT INTO products (name, description, price, category_id, brand_id, quantity,
 -- 5. INSERT PRODUCT IMAGES (with /image/ prefix)
 INSERT INTO product_images (product_id, image_url) VALUES
 -- Galaxy S25 Ultra images
-(1, '/image/galaxy-s25-ultra-1.webp'),
-(1, '/image/galaxy-s25-ultra-2.webp'),
-(1, '/image/galaxy-s25-ultra-3.webp'),
-(1, '/image/galaxy-s25-ultra-4.webp'),
+(1, '/image/galaxy-s25-1.png'),
+(1, '/image/galaxy-s25-2.png'),
+(1, '/image/galaxy-s25-3.png'),
+(1, '/image/galaxy-s25-4.png'),
 
 -- Galaxy S24 images
 (2, '/image/galaxy-s24-1.png'),
