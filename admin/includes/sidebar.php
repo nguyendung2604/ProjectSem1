@@ -19,17 +19,12 @@
             <a href="?tab=insert_products" class="nav-link <?php echo $active_tab === 'insert_products' ? 'active' : ''; ?>">
               <i class="bi bi-plus-lg"></i>Insert Products
             </a>
-            <a href="#" class="nav-link">
-                <i class="bi bi-palette-fill"></i>Insert Image & Color
-            </a>
+    
             <a href="?tab=categories" class="nav-link <?php echo $active_tab === 'categories' ? 'active' : ''; ?>">
                  <i class="bi bi-bookmark-fill"></i>Category Management
             </a>
             <a href="?tab=brands" class="nav-link <?php echo $active_tab === 'brands' ? 'active' : ''; ?>">
                <i class="bi bi-credit-card-2-back-fill"></i>Brand Management
-            </a>
-            <a href="#" class="nav-link">
-                <i class="bi bi-box-arrow-right"></i>Logout
             </a>
         </nav>
     </div>

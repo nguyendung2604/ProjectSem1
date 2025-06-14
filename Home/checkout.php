@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require_once 'db_connect.php';
 
@@ -8,53 +9,51 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
     $cart_count = array_sum($_SESSION['cart']);
 }
 
-
-// Xử lý cập nhật/xóa sản phẩm trong giỏ hàng
-if (isset($_POST['update_cart'])) {
-    foreach ($_POST['quantities'] as $product_id => $qty) {
-        if ($qty <= 0) {
-            unset($_SESSION['cart'][$product_id]);
-        } else {
-            $_SESSION['cart'][$product_id] = $qty;
-        }
+// Check for direct buy
+if (isset($_GET['product_id']) && isset($_GET['quantity'])) {
+    $pid = (int)$_GET['product_id'];
+    $qty = (int)$_GET['quantity'];
+    if ($pid > 0 && $qty > 0) {
+        $cart = [$pid => $qty];
+    }
+} else {
+    $cart = $_SESSION['cart'] ?? [];
+    if (empty($cart)) {
+        header("Location: cart.php");
+        exit;
     }
 }
-if (isset($_POST['remove'])) {
-    $remove_id = $_POST['remove'];
-    unset($_SESSION['cart'][$remove_id]);
-}
 
-// Lấy thông tin sản phẩm trong giỏ hàng
-$cart = $_SESSION['cart'] ?? [];
-$products = [];
+// Fetch product details
+$ids = implode(',', array_map('intval', array_keys($cart)));
+$sql = "SELECT product_id, name, price FROM products WHERE product_id IN ($ids)";
+$stmt = $pdo->query($sql);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Calculate total
 $total = 0;
-if (!empty($cart)) {
-    $ids = implode(',', array_map('intval', array_keys($cart)));
-    $sql = "SELECT p.product_id, p.name, p.price, pi.image_url FROM products p
-            LEFT JOIN product_images pi ON p.product_id = pi.product_id
-            WHERE p.product_id IN ($ids) GROUP BY p.product_id";
-    $stmt = $pdo->query($sql);
-    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($products as &$product) {
-        $qty = $cart[$product['product_id']];
-        $product['qty'] = $qty;
-        $product['subtotal'] = $qty * $product['price'];
-        $total += $product['subtotal'];
-    }
+foreach ($products as &$product) {
+    $qty = $cart[$product['product_id']];
+    $product['qty'] = $qty;
+    $product['subtotal'] = $qty * $product['price'];
+    $total += $product['subtotal'];
 }
 
-$cart_count = 0;
-if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
-    $cart_count = array_sum($_SESSION['cart']);
+// Handle order submission
+$order_message = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['name'], $_POST['address'], $_POST['payment_method'])) {
+    // Here you would insert order into DB (not implemented)
+    $_SESSION['cart'] = [];
+    $order_message = "Thank you for your purchase!";
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart</title>
-
+    <title>Wireless World</title>
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -69,11 +68,12 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
 
     <link rel="stylesheet" href="style.css">
     
-   
+    <style>
+        .card-info { display: none; }
+    </style>
 </head>
 <body class="bg-light">
-     <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
         <div class="container">
             <a class="navbar-brand brand-font text-primary me-4" href="index.php">Wireless World</a>
             
@@ -138,57 +138,62 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
             </div>
         </div>
     </nav>
-<section class="bg-white py-5">
-    <div class="container py-5 ">
-    
-    <h2 class="mb-4">Your Cart</h2>
-    <?php if (empty($products)): ?>
-        <div class="alert alert-info">Your cart is empty.</div>
+<div class="container" style="padding-top:90px; max-width:600px;">
+    <h2 class="fs-2 fw-bold text-dark mb-2">Checkout</h2>
+    <?php if ($order_message): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($order_message) ?></div>
     <?php else: ?>
-    <form method="post">
-    <table class="table align-middle table-bordered bg-white">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h5>Order Summary</h5>
+    <ul class="list-group mb-4">
         <?php foreach ($products as $item): ?>
-            <tr>
-                <td style="width:80px"><img src="<?= htmlspecialchars($item['image_url'] ?? 'HeroSection.jpg') ?>" width="60"></td>
-                <td><?= htmlspecialchars($item['name']) ?></td>
-                <td>$<?= number_format($item['price']) ?></td>
-                <td style="width:100px">
-                    <input type="number" name="quantities[<?= $item['product_id'] ?>]" value="<?= $item['qty'] ?>" min="1" class="form-control form-control-sm">
-                </td>
-                <td>$<?= number_format($item['subtotal']) ?></td>
-                <td>
-                    <button name="remove" value="<?= $item['product_id'] ?>" class="btn btn-danger btn-sm">Remove</button>
-                </td>
-            </tr>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <?= htmlspecialchars($item['name']) ?> x <?= $item['qty'] ?>
+                <span><?= number_format($item['subtotal'], 0, '.', ',') ?>₫</span>
+            </li>
         <?php endforeach; ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th colspan="4" class="text-end">Total:</th>
-                <th colspan="2">$<?= number_format($total) ?></th>
-            </tr>
-        </tfoot>
-    </table>
-    <div class="d-flex justify-content-between">
-        <button type="submit" name="update_cart" class="btn btn-primary">Update Cart</button>
-        <a href="checkout.php" class="btn btn-success">Checkout</a>
-    </div>
+        <li class="list-group-item d-flex justify-content-between align-items-center fw-bold">
+            Total
+            <span><?= number_format($total, 0, '.', ',') ?>₫</span>
+        </li>
+    </ul>
+    <form method="post" class="mb-5" id="checkout-form" autocomplete="off">
+        <div class="mb-3">
+            <label for="name" class="form-label">Full name</label>
+            <input type="text" name="name" id="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Shipping address</label>
+            <textarea name="address" id="address" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Payment Method</label>
+            <div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="payment_method" id="pay_card" value="card" required>
+                    <label class="form-check-label" for="pay_card">Credit/Debit Card</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="payment_method" id="pay_cod" value="cod" required>
+                    <label class="form-check-label" for="pay_cod">Pay When Delivered</label>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 card-info" id="card-info-section">
+            <label class="form-label">Card Information</label>
+            <input type="text" class="form-control mb-2" name="card_number" placeholder="Card Number">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control mb-2" name="card_expiry" placeholder="MM/YY">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control mb-2" name="card_cvc" placeholder="CVC">
+                </div>
+            </div>
+            <input type="text" class="form-control mb-2" name="card_name" placeholder="Name on Card">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Place Order</button>
     </form>
     <?php endif; ?>
-    <div class="mt-4">
-        <a href="index.php" class="btn btn-secondary">Continue Shopping</a>
-    </div>
 </div>
 <!-- Footer -->
     <footer class="bg-dark text-white pt-5 pb-3">
@@ -270,6 +275,26 @@ if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
             </div>
         </div>
     </footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cardRadio = document.getElementById('pay_card');
+    const codRadio = document.getElementById('pay_cod');
+    const cardInfo = document.getElementById('card-info-section');
+    function toggleCardInfo() {
+        if (cardRadio.checked) {
+            cardInfo.style.display = 'block';
+            // Make card fields required
+            cardInfo.querySelectorAll('input').forEach(i => i.required = true);
+        } else {
+            cardInfo.style.display = 'none';
+            cardInfo.querySelectorAll('input').forEach(i => i.required = false);
+        }
+    }
+    cardRadio.addEventListener('change', toggleCardInfo);
+    codRadio.addEventListener('change', toggleCardInfo);
+});
+</script>
 </body>
 </html>

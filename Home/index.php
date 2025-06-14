@@ -147,32 +147,38 @@ try {
 
 
 
-    <!-- Featured Products Section -->
-     <section>
-        <div class="product-container">
-            <?php if (empty($products)): ?>
-                <p>No products available.</p>
-            <?php else: ?>
-                <?php foreach ($products as $product): ?>
-                    <div class="product-card">
-                        <?php if ($product['image_url']): ?>
-                            <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                        <?php else: ?>
-                            <img src="default-image.jpg" alt="No image available">
-                        <?php endif; ?>
-                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-                        <p><strong>Brand:</strong> <?php echo htmlspecialchars($product['brand_name']); ?></p>
-                        <p class="price">$<?php echo number_format($product['price']); ?></p>
-                        <p class="<?php echo $product['quantity'] > 0 ? 'stock' : 'out-of-stock'; ?>">
-                            <?php echo $product['quantity'] > 0 ? 'In Stock: ' . $product['quantity'] : 'Out of Stock'; ?>
-                        </p>
-                        <a href="product_details.php?id=<?php echo $product['product_id']; ?>">View Details</a>
-                    </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </div>
-    </section>
+<!-- Featured Products Section -->
+<section>
+    <div class="product-container">
+        <?php if (empty($products)): ?>
+            <p>No products available.</p>
+        <?php else: ?>
+            <?php foreach ($products as $product): ?>
+                <div class="product-card">
+                    <?php if ($product['image_url']): ?>
+                        <img src="<?php echo htmlspecialchars($product['image_url']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+                    <?php else: ?>
+                        <img src="default-image.jpg" alt="No image available">
+                    <?php endif; ?>
+                    <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                    <p><strong>Brand:</strong> <?php echo htmlspecialchars($product['brand_name']); ?></p>
+                    <p class="price">$<?php echo number_format($product['price']); ?></p>
 
+                      <!-- Icons -->
+                <button class="btn btn-link text-dark p-2 me-2 nav-icon" aria-label="Shopping Cart">
+                     <a href="product_details.php?id=<?php echo $product['product_id']; ?>"> <i class="bi bi-eye"></i> </a>
+                </button>
+                  <button class="btn btn-link text-dark p-2 me-2 nav-icon" aria-label="Shopping Cart">
+                   <i class="bi bi-arrow-left-right"></i>
+                </button>
+                    <div class="button-group">
+                        <button class="add-to-cart" onclick="addToCart(<?php echo $product['product_id']; ?>)">Add to Cart</button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</section>
 
 
 
@@ -358,7 +364,7 @@ try {
                                 </div>
                                 <!-- Google Map -->
                                 <div class="map-container mt-4">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.92312398634!2d105.81641017471458!3d21.035761787539037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab0d127a01e7%3A0xab069cd4eaa76ff2!2zMjg1IFAuIMSQ4buZaSBD4bqlbiwgTGnhu4V1IEdpYWksIEJhIMSQw6xuaCwgSMOgIE7hu5lpIDEwMDAwMCwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1747289103783!5m2!1sen!2s" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bản đồ vị trí công ty" width="100%" height="300" style="border:0;"></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3723.92312398634!2d105.81641017471458!3d21.035761787539037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ab0d127a01e7%3A0xab069cd4eaa76ff2!2zMjg1IFAuIMSQ4buZaSBD4bqlbiwgTGnhu4V1IEdpYWcsIEJhIMSQw6xuaCwgSMOgIE7hu5lpIDEwMDAwMCwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1747289103783!5m2!1sen!2s" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bản đồ vị trí công ty" width="100%" height="300" style="border:0;"></iframe>
                                 </div>
                             </div>
                         </div>
